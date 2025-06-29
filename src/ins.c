@@ -594,7 +594,6 @@ void ret(reg_t *r, uint8_t *mem) {
     r->sp += 2;
     return;
   }
-
   if(opc == 0b11000010) {
     uint16_t imm = fetch16(a_seg(r->ip + 1, SR_CS, r), mem);
     r->ip = fetch16(a_seg(r->sp, SR_SS, r), mem);
@@ -609,7 +608,6 @@ void ret(reg_t *r, uint8_t *mem) {
     r->sp += 2;
     return;
   }
-
   if(opc == 0b1100101) {
     uint16_t imm = fetch16(a_seg(r->ip + 1, SR_CS, r), mem);
     r->ip = fetch16(a_seg(r->sp, SR_SS, r), mem);
@@ -619,6 +617,8 @@ void ret(reg_t *r, uint8_t *mem) {
     return;
   }
 }
+
+// what an interesting line
 
 void jcc(reg_t *r, uint8_t *mem) {
   uint8_t opc = mem[a_seg(r->ip, SR_CS, r)];
@@ -656,7 +656,7 @@ void jcc(reg_t *r, uint8_t *mem) {
     break;
   case 0b01111111:
     if(((*(uint16_t *)r->flg & CF) ? 1 : 0) == ((*(uint16_t *)r->flg & OF) ? 1 : 0) || (*(uint16_t *)r->flg & ZF) == 0) r->ip += disp;
-    // what an interesting line
+
     break;
   case 0b01110011:
     if((*(uint16_t *)r->flg & CF) + (*(uint16_t *)r->flg & ZF) == 0) r->ip += disp;
